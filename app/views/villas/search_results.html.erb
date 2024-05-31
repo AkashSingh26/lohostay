@@ -15,7 +15,9 @@
             <div class="card-body">
               <h5 class="mb-1"><%= villa[:name] %></h5>
               <p class="mb-1">Average Price/Night: ₹<%= villa[:average_price_per_night] %></p>
-              <small>Availability: <%= villa[:availability] ? 'Available' : 'Unavailable' %></small>
+              <strong class="<%= villa[:availability] ? 'available' : 'sold-out' %>">
+                Availability: <%= villa[:availability] ? 'Available' : 'Sold Out' %>
+              </strong>
               <p>
                 <%= link_to 'Show', show_results_villa_path(villa[:id], start_date: params[:start_date], end_date: params[:end_date]), class: 'btn btn-primary' %>
               </p>

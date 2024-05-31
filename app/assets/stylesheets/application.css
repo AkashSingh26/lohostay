@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+ .available {
+    color: green; /* Or any other style you want for available */
+  }
+
+ .sold-out {
+    color: red; /* Or any other style you want for sold out */
+  }

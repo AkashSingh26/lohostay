@@ -35,7 +35,9 @@
               <% today_entry = villa.calendar_entries.find_by(date: @today) %>
               <% if today_entry %>
                 <strong>Today's Price:</strong> ₹<%= today_entry.price %><br>
-                <strong>Availability:</strong> <%= today_entry.available ? 'Available' : 'Unavailable' %>
+                <strong class="<%= today_entry.available ? 'available' : 'sold-out' %>">
+                  Availability: <%= today_entry.available ? 'Available' : 'Sold Out' %>
+                </strong>
               <% else %>
                 <strong>Availability:</strong> No data for today
               <% end %>
