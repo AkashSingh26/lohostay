@@ -12,26 +12,9 @@ class VillasController < ApplicationController
   def search_results
     start_date = Date.parse(params[:start_date])
     end_date = Date.parse(params[:end_date])
-    villas = Villa.includes(:calendar_entries).all
+    sort_by = params[:sort_by] || 'price'
 
-    @villas = []
-    villas.select do |villa|
-      entries = villa.calendar_entries.where(date: start_date...end_date)
-      if entries.all?(&:available)
-        average_price = entries.average(:price).to_f
-        @villas <<{
-          id: villa.id,
-          name: villa.name,
-          average_price_per_night: average_price,
-          availability: true,
-          start_date: start_date,
-          end_date: end_date
-        }
-      end
-    end
-  end
-
-  def show
+    @villas = Villa.search_results(start_date, end_date, sort_by)
   end
 
   def show_results
@@ -39,8 +22,12 @@ class VillasController < ApplicationController
     @end_date = params[:end_date]
 
     if @start_date.present? && @end_date.present?
-      @total_price = @villa.calculate_total_price(Date.parse(@start_date), Date.parse(@end_date))
+      @availability = @villa.available_for_dates?(Date.parse(@start_date), Date.parse(@end_date))
+      @total_price = @villa.calculate_total_price(Date.parse(@start_date), Date.parse(@end_date)) if @availability
     end
+  end
+
+  def show
   end
 
   # GET /villas/new

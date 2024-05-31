@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     collection do
       get 'search'
       get 'search_results', to: 'villas#search_results'
+    end
+    member do
       get 'show_results', to: 'villas#show_results'
     end
   end
