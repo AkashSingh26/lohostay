@@ -1,4 +1,4 @@
-<body style="background-image: url('<%= asset_path('Banner_1_Greystone_Web.jpg') %>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<div class="pb-5 pt-5" style="background-image: url('<%= asset_path('Banner_1_Greystone_Web.jpg') %>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <div class="container">
     <h1 class="my-4">Lohono Stays</h1>
     <div class="card mb-4  w-50">
@@ -8,13 +8,13 @@
           <div class="row mb-3">
               <label for="start_date" class="col-sm-2 col-form-label">Start Date</label>
               <div class="col-sm-10">
-                <input type="date" name="start_date" id="start_date" class="form-control" required>
+                <%= date_field_tag :start_date, Date.today, class: 'form-control', required: true %>
               </div>
             </div>
             <div class="row mb-3">
               <label  for="end_date" class="col-sm-2 col-form-label">End Date</label>
               <div class="col-sm-10">
-                <input type="date" name="end_date" id="end_date" class="form-control" required>
+                 <%= date_field_tag :end_date, Date.today, class: 'form-control', required: true %>
               </div>
             </div>
             <%= submit_tag 'Search', class: 'btn btn-primary float-end' %>
@@ -22,4 +22,28 @@
       </div>
     </div>
   </div>
-</body>
+</div>
+<div class="container mt-5">
+  <h2 class="my-4">Villas for Rent</h2>
+  <div class="row">
+    <% @villas.each do |villa| %>
+      <div class="col-sm-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= villa.name %></h5>
+            <p class="card-text">
+              <% today_entry = villa.calendar_entries.find_by(date: @today) %>
+              <% if today_entry %>
+                <strong>Today's Price:</strong> ₹<%= today_entry.price %><br>
+                <strong>Availability:</strong> <%= today_entry.available ? 'Available' : 'Unavailable' %>
+              <% else %>
+                <strong>Availability:</strong> No data for today
+              <% end %>
+            </p>
+            <%= link_to 'Show', show_results_villa_path(villa[:id], start_date: @today, end_date: @today), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

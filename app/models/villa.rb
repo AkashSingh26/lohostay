@@ -11,37 +11,28 @@
 class Villa < ApplicationRecord
   has_many :calendar_entries, dependent: :destroy
 
+  validates :name, presence: true
+
   def self.search_results(start_date, end_date, sort_by)
     villas = Villa.includes(:calendar_entries).all
 
-    villas = villas.map do |villa|
-      average_price = villa.average_price_for_dates(start_date, end_date)
-      availability = villa.available_for_dates?(start_date, end_date)
+    villas = villas.map { |villa| build_villa_hash(villa, start_date, end_date) }
 
-      {
-        id: villa.id,
-        name: villa.name,
-        average_price_per_night: average_price,
-        availability: availability,
-        start_date: start_date,
-        end_date: end_date
-      }
-    end
-
-    villas.sort_by! do |villa|
-      case sort_by
-      when 'price'
-        -villa[:average_price_per_night]
-      when 'availability'
-        [villa[:availability] ? 0 : 1, -villa[:average_price_per_night]]
-      else
-        -villa[:average_price_per_night]
-      end
-    end
+    sort_villas(villas, sort_by)
   end
 
+  def calculate_total_price(start_date, end_date)
+    return 0 if start_date.nil? || end_date.nil?
+    entries = start_date.eql?(end_date) ? calendar_entries.where(date: start_date) : calendar_entries.where(date: start_date...end_date)
+    total_price = entries.sum(:price)
+    total_price_with_gst = total_price * 1.18
+    total_price_with_gst.round()
+  end
+
+
   def average_price_for_dates(start_date, end_date)
-    calendar_entries.where(date: start_date...end_date).average(:price).to_f
+    entries = start_date.eql?(end_date) ? calendar_entries.where(date: start_date) : calendar_entries.where(date: start_date...end_date)
+    entries&.average(:price)&.round
   end
 
   def available_for_dates?(start_date, end_date)
@@ -55,10 +46,29 @@ class Villa < ApplicationRecord
     end
   end
 
-  def calculate_total_price(start_date, end_date)
-    entries = calendar_entries.where(date: start_date...end_date)
-    total_price = entries.sum(:price)
-    total_price_with_gst = total_price * 1.18
-    total_price_with_gst.round()
+  private
+
+  def self.build_villa_hash(villa, start_date, end_date)
+    {
+      id: villa.id,
+      name: villa.name,
+      average_price_per_night: villa.average_price_for_dates(start_date, end_date),
+      availability: villa.available_for_dates?(start_date, end_date),
+      start_date: start_date,
+      end_date: end_date
+    }
+  end
+
+  def self.sort_villas(villas, sort_by)
+    villas.sort_by! do |villa|
+      case sort_by
+      when 'price'
+        -villa[:average_price_per_night]
+      when 'availability'
+        [villa[:availability] ? 0 : 1, -villa[:average_price_per_night]]
+      else
+        -villa[:average_price_per_night]
+      end
+    end
   end
 end

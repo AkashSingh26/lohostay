@@ -1,28 +1,48 @@
-<div class="container">
-  <h1 class="my-4"><%= @villa.name %></h1>
-  <%= form_with url: show_results_villa_path(@villa), method: :get, local: true do %>
-    <div class="form-group">
-      <label for="start_date">Start Date</label>
-      <%= date_field_tag :start_date, @start_date, class: 'form-control', required: true %>
+<body class="px-5 py-5" style="background-image: url('<%= asset_path('Banner_1_Greystone_Web.jpg') %>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <div class="container mt-5">
+    <h1 class="my-5 text-white text-xl-left display-1"><%= @villa.name %></h1>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card mx-2">
+          <div class="card-body">
+            <%= form_with url: show_results_villa_path(@villa), method: :get, local: true do %>
+              <div class="form-group">
+                <p>
+                  <label for="start_date">Start Date</label>
+                  <%= date_field_tag :start_date, @start_date, class: 'form-control', required: true %>
+                </p>
+              </div>
+              <div class="form-group">
+                <p>
+                  <label for="end_date">End Date</label>
+                  <%= date_field_tag :end_date, @end_date, class: 'form-control', required: true %>
+                </p>
+              </div>
+              <%= submit_tag 'Check Availability', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card mx-2">
+          <div class="card-body">
+            <% if @start_date.present? && @end_date.present? %>
+              <h3 class="mt-2">Rate Calculation</h3>
+              <p class="card-text"><strong>Stay Period:</strong> <%= @start_date %> to <%= @end_date %></p>
+              <% if @availability %>
+                <p class="card-text"><strong>Total Price (including 18% GST):</strong> ₹<%= @total_price %></p>
+              <% else %>
+                <p class="text-danger card-text">The villa is unavailable for the selected dates.</p>
+              <% end %>
+            <% else %>
+                <p class="card-text">Please specify a date range to see the total price.</p>
+            <% end %>
+            <%= link_to "Back to total villas", root_path, class: 'btn btn-secondary mt-4' %>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="end_date">End Date</label>
-      <%= date_field_tag :end_date, @end_date, class: 'form-control', required: true %>
-    </div>
-    <%= submit_tag 'Check Availability', class: 'btn btn-primary my-2' %>
-  <% end %>
+  </div>
+</body>
 
-  <% if @start_date.present? && @end_date.present? %>
-    <h3 class="my-4">Rate Calculation</h3>
-    <p><strong>Stay Period:</strong> <%= @start_date %> to <%= @end_date %></p>
-    <% if @availability %>
-      <p><strong>Total Price (including 18% GST):</strong> ₹<%= @total_price %></p>
-    <% else %>
-      <p class="text-danger">The villa is unavailable for the selected dates.</p>
-    <% end %>
-  <% else %>
-    <p>Please specify a date range to see the total price.</p>
-  <% end %>
 
-  <%= link_to "Back to total villas", root_path, class: 'btn btn-secondary mt-4' %>
-</div>

@@ -13,4 +13,6 @@
 
 class CalendarEntry < ApplicationRecord
   belongs_to :villa
+
+  validates :date, :price, presence: true
 end
