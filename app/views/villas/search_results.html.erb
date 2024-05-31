@@ -1,0 +1,12 @@
+  <% if @villas.present? %>
+    <h2 class="mb-4">Available Villas</h2>
+    <div class="list-group">
+      <% @villas.each do |villa| %>
+        <div class="list-group-item">
+          <h5 class="mb-1"><%= villa[:name] %></h5>
+          <p class="mb-1">Average Price per Night: ₹<%= villa[:average_price_per_night] %></p>
+          <small>Availability: <%= villa[:availability] ? 'Available' : 'Unavailable' %></small>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
