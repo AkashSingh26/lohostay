@@ -1,15 +1,30 @@
-<div class="container">
+<div class="container mt-5">
   <% if @villas.present? %>
     <h2 class="mb-4">Available Villas</h2>
-    <div class="list-group">
+
+    <div class="mb-4">
+      <%= link_to 'Sort by Price', search_results_villas_path(start_date: params[:start_date], end_date: params[:end_date], sort_by: 'price'), class: 'btn btn-secondary' %>
+      <%= link_to 'Sort by Availability', search_results_villas_path(start_date: params[:start_date], end_date: params[:end_date], sort_by: 'availability'), class: 'btn btn-secondary' %>
+      <%= link_to 'Edit dates', root_path, class: 'btn btn-primary' %>
+    </div>
+
+    <div class="row">
       <% @villas.each do |villa| %>
-        <div class="list-group-item">
-          <h5 class="mb-1"><%= villa[:name] %></h5>
-          <p class="mb-1">Average Price per Night: ₹<%= villa[:average_price_per_night] %></p>
-          <small>Availability: <%= villa[:availability] ? 'Available' : 'Unavailable' %></small>
-          <%= link_to 'Show', show_results_villas_path(villa), class: 'btn btn-primary float-end' %>
+        <div class="col-sm-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="mb-1"><%= villa[:name] %></h5>
+              <p class="mb-1">Average Price/Night: ₹<%= villa[:average_price_per_night] %></p>
+              <small>Availability: <%= villa[:availability] ? 'Available' : 'Unavailable' %></small>
+              <p>
+                <%= link_to 'Show', show_results_villa_path(villa[:id], start_date: params[:start_date], end_date: params[:end_date]), class: 'btn btn-primary' %>
+              </p>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
+  <% else %>
+    <p>No villas available for the selected dates.</p>
   <% end %>
 </div>
