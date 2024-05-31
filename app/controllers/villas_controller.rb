@@ -85,6 +85,6 @@ class VillasController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def villa_params
-    params.require(:villa).permit(:name)
+    params.require(:villa).permit(:name, images: [])
   end
 end

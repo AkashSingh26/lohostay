@@ -9,6 +9,8 @@
 
 
 class Villa < ApplicationRecord
+  has_many_attached :images
+
   has_many :calendar_entries, dependent: :destroy
 
   validates :name, presence: true
@@ -23,16 +25,19 @@ class Villa < ApplicationRecord
 
   def calculate_total_price(start_date, end_date)
     return 0 if start_date.nil? || end_date.nil?
-    entries = start_date.eql?(end_date) ? calendar_entries.where(date: start_date) : calendar_entries.where(date: start_date...end_date)
+    entries = avg_dates(start_date, end_date)
     total_price = entries.sum(:price)
     total_price_with_gst = total_price * 1.18
     total_price_with_gst.round()
   end
 
-
   def average_price_for_dates(start_date, end_date)
-    entries = start_date.eql?(end_date) ? calendar_entries.where(date: start_date) : calendar_entries.where(date: start_date...end_date)
+    entries = avg_dates(start_date, end_date)
     entries&.average(:price)&.round
+  end
+
+  def avg_dates(start_date, end_date)
+    start_date.eql?(end_date) ? calendar_entries.where(date: start_date) : calendar_entries.where(date: start_date...end_date)
   end
 
   def available_for_dates?(start_date, end_date)
@@ -55,7 +60,8 @@ class Villa < ApplicationRecord
       average_price_per_night: villa.average_price_for_dates(start_date, end_date),
       availability: villa.available_for_dates?(start_date, end_date),
       start_date: start_date,
-      end_date: end_date
+      end_date: end_date,
+      images: villa.images
     }
   end
 

@@ -10,3 +10,12 @@ require 'faker'
     )
   end
 end
+
+# To Add  Image placeholder
+# Villa.all.each do |villa|
+#     image_url = Faker::LoremPixel.image(size: "640x480", grayscale: false)  # Customize image size and grayscale preference as needed
+#   unless villa.images.attached?
+#     villa.images.attach(io: URI.open(image_url), filename: "villa_#{villa.id}.jpg")
+#     villa.save!
+#   end
+# end
