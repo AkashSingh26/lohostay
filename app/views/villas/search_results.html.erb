@@ -1,3 +1,4 @@
+<div class="container">
   <% if @villas.present? %>
     <h2 class="mb-4">Available Villas</h2>
     <div class="list-group">
@@ -6,7 +7,9 @@
           <h5 class="mb-1"><%= villa[:name] %></h5>
           <p class="mb-1">Average Price per Night: ₹<%= villa[:average_price_per_night] %></p>
           <small>Availability: <%= villa[:availability] ? 'Available' : 'Unavailable' %></small>
+          <%= link_to 'Show', show_results_villas_path(villa), class: 'btn btn-primary float-end' %>
         </div>
       <% end %>
     </div>
   <% end %>
+</div>

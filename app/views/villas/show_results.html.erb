@@ -1,0 +1,13 @@
+<div class="container">
+  <h1 class="my-4"><%= @villa.name %></h1>
+
+  <% if @start_date.present? && @end_date.present? %>
+    <h3 class="my-4">Rate Calculation</h3>
+    <p><strong>Stay Period:</strong> <%= @start_date %> to <%= @end_date %></p>
+    <p><strong>Total Price (including 18% GST):</strong> ₹<%= @total_price %></p>
+  <% else %>
+    <p>Please specify a date range to see the total price.</p>
+  <% end %>
+
+  <%= link_to "Back to total villas", search_results_villas_path(start_date: @start_date, end_date: @end_date), class: 'btn btn-secondary mt-4' %>
+</div>

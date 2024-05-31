@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     collection do
       get 'search'
       get 'search_results', to: 'villas#search_results'
-      get 'total_rate'
+      get 'show_results', to: 'villas#show_results'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
