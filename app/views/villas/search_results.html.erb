@@ -12,10 +12,13 @@
       <% @villas.each do |villa| %>
         <div class="col-sm-6">
           <div class="card mb-3">
+          <%= image_tag villa[:images].first, class: "card-img-top" %>
             <div class="card-body">
               <h5 class="mb-1"><%= villa[:name] %></h5>
-              <p class="mb-1">Average Price/Night: ₹<%= villa[:average_price_per_night] %></p>
-              <small>Availability: <%= villa[:availability] ? 'Available' : 'Unavailable' %></small>
+              <p class="mb-1">Average Price/Night: ₹<%=  number_with_delimiter(villa[:average_price_per_night]) %></p>
+              <strong class="<%= villa[:availability] ? 'available' : 'sold-out' %>">
+                Availability: <%= villa[:availability] ? 'Available' : 'Sold Out' %>
+              </strong>
               <p>
                 <%= link_to 'Show', show_results_villa_path(villa[:id], start_date: params[:start_date], end_date: params[:end_date]), class: 'btn btn-primary' %>
               </p>

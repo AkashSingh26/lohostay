@@ -1,4 +1,4 @@
-<body class="px-5 py-5" style="background-image: url('<%= asset_path('Banner_1_Greystone_Web.jpg') %>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+<body class="px-5 py-5" style="background-image: url('<%= url_for(@villa.images.first)  %>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <div class="container mt-5">
     <h1 class="my-5 text-white text-xl-left display-1"><%= @villa.name %></h1>
     <div class="row">
@@ -30,7 +30,7 @@
               <h3 class="mt-2">Rate Calculation</h3>
               <p class="card-text"><strong>Stay Period:</strong> <%= @start_date %> to <%= @end_date %></p>
               <% if @availability %>
-                <p class="card-text"><strong>Total Price (including 18% GST):</strong> ₹<%= @total_price %></p>
+                <p class="card-text"><strong>Total Price (including 18% GST):</strong> ₹<%=number_with_delimiter(@total_price) %></p>
               <% else %>
                 <p class="text-danger card-text">The villa is unavailable for the selected dates.</p>
               <% end %>
