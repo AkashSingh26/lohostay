@@ -1,15 +1,12 @@
 class VillasController < ApplicationController
-  before_action :set_villa, only: %i[ show edit update destroy ]
+  before_action :set_villa, only: %i[ show edit update destroy show_results ]
 
   def index
    @villas = Villa.all
   end
 
   def search
-    start_date = params[:start_date]
-    end_date = params[:end_date]
-
-    redirect_to search_results_villas_path(start_date: start_date, end_date: end_date)
+    redirect_to search_results_villas_path(start_date: params[:start_date], end_date: params[:end_date])
   end
 
   def search_results
@@ -23,15 +20,27 @@ class VillasController < ApplicationController
       if entries.all?(&:available)
         average_price = entries.average(:price).to_f
         @villas <<{
+          id: villa.id,
           name: villa.name,
           average_price_per_night: average_price,
-          availability: true
+          availability: true,
+          start_date: start_date,
+          end_date: end_date
         }
       end
     end
   end
 
   def show
+  end
+
+  def show_results
+    @start_date = params[:start_date]
+    @end_date = params[:end_date]
+
+    if @start_date.present? && @end_date.present?
+      @total_price = @villa.calculate_total_price(Date.parse(@start_date), Date.parse(@end_date))
+    end
   end
 
   # GET /villas/new
