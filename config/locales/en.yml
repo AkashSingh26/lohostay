@@ -29,3 +29,29 @@
 
 en:
   hello: "Hello world"
+  welcome: "Welcome to our application"
+  created_successfully: "Created successfully"
+  updated_successfully: "Updated successfully"
+  deleted_successfully: "Deleted successfully"
+  start_date: "Start Date"
+  end_date: "End Date"
+  availability: "Availability"
+  calendar_entry:
+    not_saved: "prohibited this calendar_entry from being saved:"
+  home:
+    title: "Lohono Stays"
+    subtitle: "Search Villas"
+    title2: "Villas for Rent"
+    no_data: "No data for today"
+  villas:
+    not_saved: "prohibited this villa from being saved:"
+    show_results:
+      rate_title: "Rate Calculation"
+      stay: "Stay Period"
+      price_gst: "Total Price (including 18% GST)"
+      unavailable: "Villa is not available for the selected dates."
+      date_error: "Please specify a date range to see the total price."
+    search_results:
+      title: "Available Villas"
+      price_rate: "Average Price/Night"
+      not_found: "No villas available for the selected dates."

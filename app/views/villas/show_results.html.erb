@@ -8,13 +8,13 @@
             <%= form_with url: show_results_villa_path(@villa), method: :get, local: true do %>
               <div class="form-group">
                 <p>
-                  <label for="start_date">Start Date</label>
+                  <label for="start_date"><%= I18n.t('start_date') %></label>
                   <%= date_field_tag :start_date, @start_date, class: 'form-control', required: true %>
                 </p>
               </div>
               <div class="form-group">
                 <p>
-                  <label for="end_date">End Date</label>
+                  <label for="end_date"><%= I18n.t('end_date') %></label>
                   <%= date_field_tag :end_date, @end_date, class: 'form-control', required: true %>
                 </p>
               </div>
@@ -27,15 +27,15 @@
         <div class="card mx-2">
           <div class="card-body">
             <% if @start_date.present? && @end_date.present? %>
-              <h3 class="mt-2">Rate Calculation</h3>
-              <p class="card-text"><strong>Stay Period:</strong> <%= @start_date %> to <%= @end_date %></p>
+              <h3 class="mt-2"><%= I18n.t('villas.show_results.rate_title') %></h3>
+              <p class="card-text"><strong><%= I18n.t('villas.show_results.stay') %>:</strong> <%= @start_date %> to <%= @end_date %></p>
               <% if @availability %>
-                <p class="card-text"><strong>Total Price (including 18% GST):</strong> ₹<%=number_with_delimiter(@total_price) %></p>
+                <p class="card-text"><strong><%= I18n.t('villas.show_results.price_gst') %>:</strong> ₹<%=number_with_delimiter(@total_price) %></p>
               <% else %>
-                <p class="text-danger card-text">The villa is unavailable for the selected dates.</p>
+                <p class="text-danger card-text"><%= I18n.t('villas.show_results.unavailable') %></p>
               <% end %>
             <% else %>
-                <p class="card-text">Please specify a date range to see the total price.</p>
+                <p class="card-text"><%= I18n.t('villas.show_results.date_error') %></p>
             <% end %>
             <%= link_to "Back to total villas", root_path, class: 'btn btn-secondary mt-4' %>
           </div>

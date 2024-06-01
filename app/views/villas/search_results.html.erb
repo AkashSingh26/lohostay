@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <% if @villas.present? %>
-    <h2 class="mb-4">Available Villas</h2>
+    <h2 class="mb-4"><%= I18n.t('villas.search_results.title') %></h2>
 
     <div class="mb-4">
       <%= link_to 'Sort by Price', search_results_villas_path(start_date: params[:start_date], end_date: params[:end_date], sort_by: 'price'), class: 'btn btn-secondary' %>
@@ -15,9 +15,9 @@
           <%= image_tag villa[:images].first, class: "card-img-top" %>
             <div class="card-body">
               <h5 class="mb-1"><%= villa[:name] %></h5>
-              <p class="mb-1">Average Price/Night: ₹<%=  number_with_delimiter(villa[:average_price_per_night]) %></p>
+              <p class="mb-1"><%= I18n.t('villas.search_results.price_rate') %>: ₹<%=  number_with_delimiter(villa[:average_price_per_night]) %></p>
               <strong class="<%= villa[:availability] ? 'available' : 'sold-out' %>">
-                Availability: <%= villa[:availability] ? 'Available' : 'Sold Out' %>
+                <%=I18n.t('availability')%> <%= villa[:availability] ? 'Available' : 'Sold Out' %>
               </strong>
               <p>
                 <%= link_to 'Show', show_results_villa_path(villa[:id], start_date: params[:start_date], end_date: params[:end_date]), class: 'btn btn-primary' %>
@@ -28,6 +28,6 @@
       <% end %>
     </div>
   <% else %>
-    <p>No villas available for the selected dates.</p>
+    <p><%= I18n.t('villas.search_results.not_found')%></p>
   <% end %>
 </div>

@@ -25,7 +25,7 @@ class CalendarEntriesController < ApplicationController
 
     respond_to do |format|
       if @calendar_entry.save
-        format.html { redirect_to calendar_entry_url(@calendar_entry), notice: "Calendar entry was successfully created." }
+        format.html { redirect_to calendar_entry_url(@calendar_entry), notice: I18n.t('created_successfully') }
         format.json { render :show, status: :created, location: @calendar_entry }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class CalendarEntriesController < ApplicationController
   def update
     respond_to do |format|
       if @calendar_entry.update(calendar_entry_params)
-        format.html { redirect_to calendar_entry_url(@calendar_entry), notice: "Calendar entry was successfully updated." }
+        format.html { redirect_to calendar_entry_url(@calendar_entry), notice: I18n.t('updated_successfully') }
         format.json { render :show, status: :ok, location: @calendar_entry }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class CalendarEntriesController < ApplicationController
     @calendar_entry.destroy!
 
     respond_to do |format|
-      format.html { redirect_to calendar_entries_url, notice: "Calendar entry was successfully destroyed." }
+      format.html { redirect_to calendar_entries_url,notice: I18n.t('destroyed_successfully') }
       format.json { head :no_content }
     end
   end

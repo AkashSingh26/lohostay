@@ -264,6 +264,7 @@ DEPENDENCIES
   capybara
   debug
   faker
+  i18n
   importmap-rails
   jbuilder
   pry (~> 0.10.3)
