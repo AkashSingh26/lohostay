@@ -27,3 +27,7 @@
     height: 200px;
     object-fit: cover;  /* Optional: Maintain aspect ratio and crop if needed */
   }
+
+  .navbar-light .navbar-nav .nav-link {
+    color: #000;
+  }
