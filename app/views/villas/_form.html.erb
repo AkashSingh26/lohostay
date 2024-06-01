@@ -1,7 +1,7 @@
 <%= form_with(model: villa) do |form| %>
   <% if villa.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(villa.errors.count, "error") %> prohibited this villa from being saved:</h2>
+      <h2><%= pluralize(villa.errors.count, "error") %> <%= I18n.t('villas.not_saved')%></h2>
 
       <ul>
         <% villa.errors.each do |error| %>

@@ -45,7 +45,7 @@ class VillasController < ApplicationController
 
     respond_to do |format|
       if @villa.save
-        format.html { redirect_to villa_url(@villa), notice: "Villa was successfully created." }
+        format.html { redirect_to villa_url(@villa), notice: I18n.t('created_successfully') }
         format.json { render :show, status: :created, location: @villa }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,7 +58,7 @@ class VillasController < ApplicationController
   def update
     respond_to do |format|
       if @villa.update(villa_params)
-        format.html { redirect_to villa_url(@villa), notice: "Villa was successfully updated." }
+        format.html { redirect_to villa_url(@villa), notice: I18n.t('updated_successfully') }
         format.json { render :show, status: :ok, location: @villa }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,7 +72,7 @@ class VillasController < ApplicationController
     @villa.destroy!
 
     respond_to do |format|
-      format.html { redirect_to villas_url, notice: "Villa was successfully destroyed." }
+      format.html { redirect_to villas_url,notice: I18n.t('deleted_successfully') }
       format.json { head :no_content }
     end
   end

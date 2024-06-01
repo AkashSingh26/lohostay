@@ -1,18 +1,18 @@
 <div class="pb-5 pt-5" style="background-image: url('<%= asset_path('Banner_1_Greystone_Web.jpg') %>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <div class="container">
-    <h1 class="my-4">Lohono Stays</h1>
+    <h1 class="my-4 text-white display-1"><%=I18n.t('home.title')%></h1>
     <div class="card mb-4  w-50">
       <div class="card-body">
-        <h2 class="card-title">Search Villas</h2>
+        <h2 class="card-title"><%=I18n.t('home.subtitle')%></h2>
         <%= form_with url: search_villas_path, method: :get, local: true, class: 'form-inline' do %>
           <div class="row mb-3">
-              <label for="start_date" class="col-sm-2 col-form-label">Start Date</label>
+              <label for="start_date" class="col-sm-2 col-form-label"><%=I18n.t('start_date')%></label>
               <div class="col-sm-10">
                 <%= date_field_tag :start_date, Date.today, class: 'form-control', required: true %>
               </div>
             </div>
             <div class="row mb-3">
-              <label  for="end_date" class="col-sm-2 col-form-label">End Date</label>
+              <label  for="end_date" class="col-sm-2 col-form-label"><%=I18n.t('end_date')%></label>
               <div class="col-sm-10">
                  <%= date_field_tag :end_date, Date.today, class: 'form-control', required: true %>
               </div>
@@ -24,23 +24,23 @@
   </div>
 </div>
 <div class="container mt-5">
-  <h2 class="my-4">Villas for Rent</h2>
+  <h2 class="my-4"><%=I18n.t('home.title2')%></h2>
   <div class="row">
     <% @villas.each do |villa| %>
       <div class="col-sm-6">
         <div class="card mb-3">
           <%= image_tag villa.images.first, class: "card-img-top" %>
           <div class="card-body">
-            <h5 class="card-title"><%= villa.name %></h5>
+            <h5 class="card-title text-xl-left"><%= villa.name %></h5>
             <p class="card-text">
               <% today_entry = villa.calendar_entries.find_by(date: @today) %>
               <% if today_entry %>
                 <strong>Today's Price:</strong> ₹<%= number_with_delimiter(today_entry.price) %><br>
                 <strong class="<%= today_entry.available ? 'available' : 'sold-out' %>">
-                  Availability: <%= today_entry.available ? 'Available' : 'Sold Out' %>
+                  <%=I18n.t('availability')%>: <%= today_entry.available ? 'Available' : 'Sold Out' %>
                 </strong>
               <% else %>
-                <strong>Availability:</strong> No data for today
+                <strong><%=I18n.t('availability')%>:</strong> <%=I18n.t('home.no_data')%>
               <% end %>
             </p>
             <%= link_to 'Show', show_results_villa_path(villa[:id], start_date: @today, end_date: @today), class: 'btn btn-primary' %>
