@@ -5,9 +5,8 @@
     <div class="mb-4">
       <%= link_to 'Sort by Price', search_results_villas_path(start_date: params[:start_date], end_date: params[:end_date], sort_by: 'price'), class: 'btn btn-secondary' %>
       <%= link_to 'Sort by Availability', search_results_villas_path(start_date: params[:start_date], end_date: params[:end_date], sort_by: 'availability'), class: 'btn btn-secondary' %>
-      <%= link_to 'Edit dates', root_path, class: 'btn btn-primary' %>
+      <%= link_to 'Home page', root_path, class: 'btn btn-primary float-end' %>
     </div>
-
     <div class="row">
       <% @villas.each do |villa| %>
         <div class="col-sm-6">

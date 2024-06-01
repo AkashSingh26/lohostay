@@ -35,6 +35,8 @@ en:
   deleted_successfully: "Deleted successfully"
   start_date: "Start Date"
   end_date: "End Date"
+  checkin_date: "Checkin Date"
+  checkout_date: "Checkout Date"
   availability: "Availability"
   calendar_entry:
     not_saved: "prohibited this calendar_entry from being saved:"
